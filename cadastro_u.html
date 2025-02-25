@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <title>Cadastro Usuario</title>
+</head>
+<body>
+    <nav>
+        <span>ArtVisao</span>
+        <span>Menu</span>
+    </nav>
+    <main class="container">
+        <h2>Cadastro de Usuario</h2> 
+        <form id="cadastro" class="form-group">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" class="form-control" placeholder="Seu Nome">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" class="form-control" placeholder="email@exemplo.com">
+            <label for="phone">Telefone</label>
+            <input type="tel" id="phone" class="form-control" placeholder="31999999999">
+        </form>
+        <button type="reset" class="btn btn-secondary" id="cancelar">Cancelar</button>
+        <button type="submit" class="btn btn-success" id="enviar" form="cadastro">Cadastrar</button>
+    </main>
+
+    <div id="alert" class="alert" style="display:none;"></div>
+
+
+    <script>
+        const form = document.getElementById('cadastro');
+        const alertDiv = document.getElementById('alert');
+
+        form.addEventListener( 'submit', async function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            console.log(JSON.parse(JSON.stringify({name: name, email: email, phone: phone})));
+
+            const confirma = await fetch('https://artvisao.joaovitordev.com.br/api/user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({name: name, email: email, phone: phone})
+                })
+            .then((resposta) => {
+                if (resposta.status === 201 || resposta.status === '201'){
+                    console.log('Usuario Cadastrado');
+                    alert('Usuario Cadastrado');
+                } else if (resposta.headers.status === 400 || resposta.headers.status === '400') {
+                    console.log('Bad Request');
+                    alert('Bad Request');
+                } else {
+                    console.log('Erro desconhecido');
+                    alert('Erro desconhecido');
+                }
+            });
+        });
+
+        document.getElementById('cancelar').addEventListener('click', function () {
+            document.getElementById('cadastro').reset();
+        });
+    </script>
+
+
+
+<script src="./lib/jquery-3.7.1.min.js"></script>
+<script src="./lib/bootstrap.bundle.min.js"></script>
+</body>
+</html>
