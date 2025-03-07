@@ -35,7 +35,8 @@
                     <tr>
                         <th>Responsável</th>
                         <th style="text-align: center;">Data da Montagem</th>
-                        <th><div>Projeto</div></th>
+                        <th><div>Cliente</div></th>
+                        <th>Projeto</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -75,10 +76,10 @@
             console.log(json);
             console.log("teste");
 
-            json.forEach(peoject => {
+            json.forEach(project => {
                 let option = document.createElement('option');
-                option.value = peoject.id;
-                option.innerHTML = peoject.name;
+                option.value = project.id;
+                option.innerHTML = project.description;
                 optionsp.append(option);
             });
         });
@@ -135,6 +136,7 @@
                     { "data": "user.name" }, 
                     { "data": "mountingDate" }, 
                     { "data": "project.name" },
+                    { "data": "project.description" },
                 ]
             });
         });

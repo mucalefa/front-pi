@@ -17,14 +17,14 @@
         <h2>Cadastro de Projeto</h2> 
         <form id="cadastro" class="form-group">
             <label for="name">Cliente:</label>
-            <input type="text" id="name" class="form-control" placeholder="Nome do Cliente"> <br>
+            <input type="text" id="name" class="form-control" placeholder="Nome do Cliente">
             <label for="select">Responsavel Tecnico:</label>
             <select class="custom-select" id="select" name="select">
-            </select> <br> <br>
+            </select>
             <label for="visitDate">Data da Visita:</label>
-            <input type="date" id="visitDate" class="form-control"> <br>
+            <input type="date" id="visitDate" class="form-control">
             <label for="dateProjectStart">Inicio Projeto:</label>
-            <input type="date" id="dateProjectStart" class="form-control" > <br>
+            <input type="date" id="dateProjectStart" class="form-control" >
             <label for="dateProjectEnd">Fim Projeto:</label>
             <input type="date" id="dateProjectEnd" class="form-control" > <br>
             <label for="description">Descricao:</label>
@@ -124,8 +124,8 @@
                     "dataSrc": ""
                 },
                 "columns": [
+                    { "data": "name" }, 
                     { "data": "user.name" }, 
-                    { "data": "id" }, 
                     { "data": "visitDate" },
                     { "data": "dateProjectStart" },
                     { "data": "dateProjectEnd" },
