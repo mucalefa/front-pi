@@ -20,7 +20,7 @@
             <label for="mountingDate">Data da Montagem:</label>
             <input type="date" id="mountingDate" class="form-control"> <br>
             <label for="select">Responsavel:</label>
-            <select class="custom-select" id="responsible" name="responsible"> 
+            <select class="custom-select" id="select" name="select"> 
             </select> <br> <br>
             <label for="selectproj">Projeto:</label>
             <select class="custom-select" aria-label="Default select example" id="selectproj" name="selectproj">
@@ -53,7 +53,7 @@
     <script src="./lib/dataTable.min.js"></script>
 
     <script>
-        const options = document.getElementById('responsible');
+        const options = document.getElementById('select');
         options.innerHTML = '<option id="name" style="max-width: 350px;" value="" disabled selected>Escolha um Responsavel</option>';
         fetch('https://artvisao.joaovitordev.com.br/api/user')
         .then((resposta) => resposta.json())
