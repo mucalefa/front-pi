@@ -1,13 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt=br">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cadastro - Art Visão SI</title>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
 </head>
 <body>
-    <p><a href="cadastro_u.html" >Cadastro de Usuario (responsavel)</a></p>
-    <p><a href="cadastro_p.html" >Cadastro de Visita e Projeto</a></p>
-    <p><a href="cadastro_m.html" >Cadastro de Montagem</a></p>
+    <!-- Cabeçalho -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo3.png" alt="Logo Art Visão SI">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Página inicial</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cadastro_u.html">Cadastro de Usuário</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cadastro_p.html">Cadastro de Projeto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cadastro_m.html">Cadastro de Montagem</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container text-center mt-5">
+        <h1>Bem-vindo ao Sistema de Cadastro</h1>
+        <p>Escolha uma das opções acima para iniciar o cadastro.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

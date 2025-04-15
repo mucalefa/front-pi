@@ -4,27 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./lib/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Cadastro Usuario</title>
 </head>
 <body>
-    <nav>
-        <span>ArtVisao</span>
-        <a href="index.html"> <span>Menu</span> </a>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo3.png" alt="Logo Art Visão SI">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Página inicial</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cadastro_u.html">Cadastro de Usuário</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cadastro_p.html">Cadastro de Projeto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cadastro_m.html">Cadastro de Montagem</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
     <main class="container">
-        <h2>Cadastro de Usuario</h2> 
+        <div class="container text-center mt-5">
+            <img src="img/logo3.png" alt="Logo Art Visão SI">
+        </div>
         <form id="cadastro" class="form-group">
+            <h1 class="form-title">Cadastro de Usuário</h1> 
             <label for="name">Nome:</label>
             <input type="text" id="name" class="form-control" placeholder="Seu Nome">
             <label for="email">E-mail:</label>
             <input type="email" id="email" class="form-control" placeholder="email@exemplo.com">
             <label for="phone">Telefone</label>
             <input type="tel" id="phone" class="form-control" placeholder="31999999999">
+            <form class="form-buttons"> 
+                <button type="reset" class="btn btn-secondary" id="cancelar">Cancelar</button>
+                <button type="submit" class="btn btn-success" id="enviar" form="cadastro">Cadastrar</button>
+            </form>
         </form>
-        <button type="reset" class="btn btn-secondary" id="cancelar">Cancelar</button>
-        <button type="submit" class="btn btn-success" id="enviar" form="cadastro">Cadastrar</button>
     </main>
+
 
     <div id="alert" class="alert" style="display:none;"></div>
 
@@ -71,5 +91,7 @@
 
 <script src="./lib/jquery-3.7.1.min.js"></script>
 <script src="./lib/bootstrap.bundle.min.js"></script>
+<script src="./js/script.js"></script>
+
 </body>
 </html>
