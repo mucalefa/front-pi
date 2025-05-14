@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./lib/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Cadastro Projeto</title>
+    <title>Cadastro Montagem</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -13,7 +14,7 @@
             <a class="navbar-brand" href="#">
                 <img src="img/logo3.png" alt="Logo Art Visão SI">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -21,148 +22,175 @@
                     <li class="nav-item"><a class="nav-link" href="index.html">Página inicial</a></li>
                     <li class="nav-item"><a class="nav-link" href="cadastro_u.html">Cadastro de Usuário</a></li>
                     <li class="nav-item"><a class="nav-link" href="cadastro_p.html">Cadastro de Projeto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="cadastro_m.html">Cadastro de Montagem</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="cadastro_m.html">Cadastro de Montagem</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
     <main class="container">
         <div class="container text-center mt-5">
-            <h1>  <img src="img/logo3.png" alt="Logo Art Visão SI"></h1> 
+            <h1><img src="img/logo3.png" alt="Logo Art Visão SI"></h1> 
         </div>
+
         <form id="cadastro" class="form-group">
             <h1 class="form-title">Cadastro de Montagem</h1> 
+            <input type="hidden" id="editandoId" />
             <label for="mountingDate">Data da Montagem:</label>
             <input type="date" id="mountingDate" class="form-control"> <br>
-            <label for="select">Responsavel:</label>
-            <select class="custom-select" id="select" name="select"> 
-            </select> <br> <br>
+            <label for="select">Responsável:</label>
+            <select class="custom-select" id="select" name="select"></select> <br><br>
             <label for="selectproj">Projeto:</label>
-            <select class="custom-select" aria-label="Default select example" id="selectproj" name="selectproj">
-            </select>   
+            <select class="custom-select" id="selectproj" name="selectproj"></select>   
             <form class="form-buttons"> 
                 <button type="reset" class="btn btn-secondary" id="cancelar">Cancelar</button>
-                <button type="submit" class="btn btn-success" id="enviar" form="cadastro">Cadastrar</button>
+                <button type="submit" class="btn btn-success" id="enviar">Cadastrar</button>
             </form>
         </form>
-        <br> <br> <br> <br>
+
+        <br><br><br><br>
+
         <div>
             <table id="tabelaMontagem" class="table table-striped table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th>Responsável</th>
                         <th style="text-align: center;">Data da Montagem</th>
-                        <th><div>Cliente</div></th>
+                        <th>Cliente</th>
                         <th>Projeto</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
-        <br> <br>
+        <br><br>
     </main>
 
     <div id="alert" class="alert" style="display:none;"></div>
 
-
     <script src="./lib/jquery-3.7.1.min.js"></script>
     <script src="./lib/bootstrap.bundle.min.js"></script>
     <script src="./lib/dataTable.min.js"></script>
-    
 
     <script>
-        const options = document.getElementById('select');
-        options.innerHTML = '<option id="name" style="max-width: 350px;" value="" disabled selected>Escolha um Responsavel</option>';
-        fetch('https://artvisao.joaovitordev.com.br/api/user')
-        .then((resposta) => resposta.json())
-        .then((json) => {
-            console.log(json);
-            
-            json.forEach(user => {
-                let option = document.createElement('option');
-                option.value = user.id;
-                option.innerHTML = user.name;
-                options.append(option);
-            });
-        });
-
-        const optionsp = document.getElementById('selectproj');
-        optionsp.innerHTML = '<option id="project.name" style="max-width: 350px;" value="" disabled selected>Escolha um Projeto</option>';
-        fetch('https://artvisao.joaovitordev.com.br/api/project')
-        .then((resposta) => resposta.json())
-        .then((json) => {
-            console.log(json);
-            console.log("teste");
-
-            json.forEach(project => {
-                let option = document.createElement('option');
-                option.value = project.id;
-                option.innerHTML = project.description;
-                optionsp.append(option);
-            });
-        });
-
+        const select = document.getElementById('select');
+        const selectproj = document.getElementById('selectproj');
         const form = document.getElementById('cadastro');
-        const alertDiv = document.getElementById('alert');
+        let editandoId = null;
 
-        form.addEventListener('submit', async function (event) {
-            event.preventDefault(); // Impede o envio padrão do formulário
-
-            const mountingDate = document.getElementById('mountingDate').value;
-            const userId = document.getElementById('select').value;      
-            const projectId = document.getElementById('selectproj').value;
-            console.log(JSON.parse(JSON.stringify({mountingDate: mountingDate, userId: userId, projectId: projectId})));
-            
-            const confirma = await fetch('https://artvisao.joaovitordev.com.br/api/mounting', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({mountingDate: mountingDate, userId: userId, projectId: projectId})
-                })
-            .then((cadastro) => {
-                if (cadastro.status === 201 || cadastro.status === '201'){
-                    console.log('Montagem Cadastrada');
-                    alert('Montagem Cadastrado');
-                } else if (cadastro.headers.status === 400 || cadastro.headers.status === '400') {
-                    console.log('Bad Request');
-                    alert('Bad Request');
-                } else if (cadastro.headers.status === 404 || cadastro.headers.status === '404') {
-                    console.log('Nao tem nada com esse  nome aqui');
-                    alert('Nao tem nada com esse  nome aqui');
-                } else {
-                    console.log('Erro desconhecido');
-                    alert('Erro desconhecido');
-                }
+        select.innerHTML = '<option disabled selected>Escolha um Responsável</option>';
+        fetch('https://artvisao.joaovitordev.com.br/api/user')
+            .then(res => res.json())
+            .then(users => {
+                users.forEach(user => {
+                    let option = document.createElement('option');
+                    option.value = user.id;
+                    option.textContent = user.name;
+                    select.append(option);
+                });
             });
+
+        selectproj.innerHTML = '<option disabled selected>Escolha um Projeto</option>';
+        fetch('https://artvisao.joaovitordev.com.br/api/project')
+            .then(res => res.json())
+            .then(projects => {
+                projects.forEach(project => {
+                    let option = document.createElement('option');
+                    option.value = project.id;
+                    option.textContent = project.description;
+                    selectproj.append(option);
+                });
+            });
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const dados = {
+                mountingDate: document.getElementById('mountingDate').value,
+                userId: select.value,
+                projectId: selectproj.value
+            };
+
+            const url = editandoId
+                ? `https://artvisao.joaovitordev.com.br/api/mounting/${editandoId}`
+                : 'https://artvisao.joaovitordev.com.br/api/mounting';
+
+            const method = editandoId ? 'PUT' : 'POST';
+
+            const response = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            if (response.ok) {
+                alert(editandoId ? 'Montagem atualizada com sucesso!' : 'Montagem cadastrada com sucesso!');
+                $('#tabelaMontagem').DataTable().ajax.reload();
+                form.reset();
+                editandoId = null;
+                document.getElementById('enviar').textContent = 'Cadastrar';
+            } else {
+                alert('Erro ao salvar montagem.');
+            }
         });
 
-        document.getElementById('cancelar').addEventListener('click', function () {
-            document.getElementById('cadastro').reset();
+        document.getElementById('cancelar').addEventListener('click', () => {
+            editandoId = null;
+            form.reset();
+            document.getElementById('enviar').textContent = 'Cadastrar';
         });
 
         $(document).ready(function () {
             $('#tabelaMontagem').DataTable({
-                "processing": true,
-                "serverSide": false,
-                "ajax": {
-                    "url": "https://artvisao.joaovitordev.com.br/api/mounting",
-                    "type": "GET",
-                    "dataSrc": ""
+                ajax: {
+                    url: "https://artvisao.joaovitordev.com.br/api/mounting",
+                    dataSrc: ""
                 },
-                "columns": [
-                    { "data": "user.name" }, 
-                    { "data": "mountingDate" }, 
-                    { "data": "project.name" },
-                    { "data": "project.description" },
+                columns: [
+                    { data: "user.name" },
+                    { data: "mountingDate" },
+                    { data: "project.name" },
+                    { data: "project.description" },
+                    {
+                        data: "id",
+                        render: function (id) {
+                            return `
+                                <button class="btn btn-sm btn-warning" onclick="editarMontagem(${id})">✏️</button>
+                                <button class="btn btn-sm btn-danger" onclick="confirmarExclusao(${id})">🗑️</button>
+                            `;
+                        }
+                    }
                 ]
             });
         });
 
+        function editarMontagem(id) {
+            fetch(`https://artvisao.joaovitordev.com.br/api/mounting/${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('mountingDate').value = data.mountingDate.substring(0, 10);
+                    select.value = data.userId;
+                    selectproj.value = data.projectId;
+                    editandoId = id;
+                    document.getElementById('enviar').textContent = 'Atualizar';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+        }
+
+        function confirmarExclusao(id) {
+            if (confirm("Deseja realmente excluir esta montagem?")) {
+                fetch(`https://artvisao.joaovitordev.com.br/api/mounting/${id}`, {
+                    method: 'DELETE'
+                }).then(res => {
+                    if (res.ok) {
+                        alert('Montagem excluída com sucesso!');
+                        $('#tabelaMontagem').DataTable().ajax.reload();
+                    } else {
+                        alert('Erro ao excluir montagem.');
+                    }
+                });
+            }
+        }
     </script>
-    <script src="./js/script.js"></script>
-
-
-
 </body>
 </html>
